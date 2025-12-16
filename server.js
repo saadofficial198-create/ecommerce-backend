@@ -8,7 +8,7 @@ const cors = require("cors");
 
 
 const allowedOrigins = [
-  "https://admin-professional.vercel.app/"
+  "https://admin-professional.vercel.app"
 ];
 
 
