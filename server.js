@@ -8,9 +8,7 @@ const cors = require("cors");
 
 
 const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://your-frontend.vercel.app"
+  "https://admin-professional.vercel.app/"
 ];
 
 
