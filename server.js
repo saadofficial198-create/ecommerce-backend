@@ -27,6 +27,13 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "🚀 Backend server is running successfully",
+  });
+});
+
 app.use(express.json());
 app.use("/", router);
 app.use(responseMiddleware);
