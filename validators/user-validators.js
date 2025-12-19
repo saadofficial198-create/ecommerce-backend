@@ -16,12 +16,7 @@ const resisterValidator = z.object({
   password: z
     .string({ required_error: "Password is required" })
     .min(8, "At least 8 characters required")
-    .max(100, "At most 100 characters allowed"),
-
-  phone: z
-    .string({ required_error: "Phone number is required." })
-    .trim()
-    .min(1, { message: "Phone number is required." })
+    .max(100, "At most 100 characters allowed")
 });
 const loginValidator = z.object({
   email: z

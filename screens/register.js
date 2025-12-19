@@ -1,33 +1,21 @@
+const bcrypt = require("bcrypt");
 const User = require("../models/user-model");
 
 const register = async (req, res, next) => {
   try {
-    const { name, email, phone, password } = req.body;
-    const emailIsExist = await User.findOne({ email: email });
-    if (emailIsExist) {
-      return res.status(409).json({
-        message: "Email Already Exist",
-      });
-    }
-    const userCreated = await User.create({
-      name,
-      email,
-      phone,
-      password,
-    });
-    const err = {
-      status: 201,
-      message: "User Created Successfully",
-      token: await userCreated.generateAuthToken(),
-    };
-    next(err);
+    const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return next({ status: 409, message: "User exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({ name, email, password: hashedPassword });
+
+    res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
-    const err = {
-      status: 400,
-      message: "Internal Server Error",
-      extraMessage: error.message,
-    };
-    next(err);
+    next(error);
   }
 };
+
 module.exports = register;

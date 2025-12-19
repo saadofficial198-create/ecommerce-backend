@@ -3,6 +3,7 @@ const router = express.Router();
 const validators = require("../middlewares/validator-middleware");
 
 // Screens
+const login = require("../screens/login");
 const register = require("../screens/register");
 const admin = require("../screens/admin");
 const media = require("../screens/media");
@@ -19,6 +20,8 @@ const Orders = require("../screens/orders");
 const orderDetails = require("../screens/orderdetails");
 const orderStatusUpdate = require("../screens/orderstatusupdate");
 // Middlewares
+const authMiddleware = require("../middlewares/auth-middleware");
+const roleMiddleware = require("../middlewares/role-middleware");
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -26,21 +29,22 @@ const upload = multer({ storage });
 const { resisterValidator } = require("../validators/user-validators");
 const { checkOutValidator } = require("../validators/checkout-validators");
 // Routes
+router.route("/login").post(login);
 router.route("/admin").post(admin);
 router.route("/media").get(media);
 router.route("/all-products").get(allProducts);
-router.route("/all-orders").get(Orders);
-router.post("/add-new-product", addNewProduct);
-router.post("/upload-media", upload.array("media"), uploadMedia);
+router.get("/all-orders", authMiddleware, roleMiddleware(["admin"]), Orders);
 router.route("/register").post(validators(resisterValidator), register);
-router.put('/update-product/:id', editProduct);
-router.get('/single-product/:id', getSingleProductData);
-router.get('/product/slug/:slug', getProductSlug);
-router.post('/getsproductdata/', getsProductData);
-router.delete('/delete-product/:id', deleteProductData);
 router.route("/checkout").post(validators(checkOutValidator), checkOut);
+router.post("/upload-media", upload.array("media"), uploadMedia);
+router.post("/add-new-product", authMiddleware, roleMiddleware(["admin", "product_entry_officer"]), addNewProduct);
+router.post('/getsproductdata/', getsProductData);
 router.get('/order-details/:id', orderDetails);
-router.put('/update-order-status/:orderid/:status', orderStatusUpdate);
+router.get('/product/slug/:slug', getProductSlug);
+router.get('/single-product/:id', getSingleProductData);
+router.put('/update-product/:id', editProduct);
+router.put("/update-order-status/:orderid/:status", authMiddleware, roleMiddleware(["admin"]), orderStatusUpdate);
+router.delete("/delete-product/:id", authMiddleware, roleMiddleware(["admin"]), deleteProductData);
 
 
 module.exports = router;
