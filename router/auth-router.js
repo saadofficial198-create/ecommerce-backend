@@ -33,7 +33,7 @@ router.route("/login").post(login);
 router.route("/admin").post(admin);
 router.route("/media").get(media);
 router.route("/all-products").get(allProducts);
-router.get("/all-orders", authMiddleware, roleMiddleware(["admin"]), Orders);
+router.get("/all-orders", authMiddleware, roleMiddleware(["admin", "product_entry_officer"]), Orders);
 router.route("/register").post(validators(resisterValidator), register);
 router.route("/checkout").post(validators(checkOutValidator), checkOut);
 router.post("/upload-media", upload.array("media"), uploadMedia);
