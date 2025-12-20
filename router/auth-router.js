@@ -31,7 +31,7 @@ const upload = multer({ storage });
 const { resisterValidator } = require("../validators/user-validators");
 const { checkOutValidator } = require("../validators/checkout-validators");
 // Routes
-router.route("/api/auth/admin-register").post(authMiddleware, roleMiddleware(["admin"]), validators(resisterValidator), adminRegister);
+router.route("/api/auth/admin-register").post( validators(resisterValidator), adminRegister);
 router.route("/api/auth/admin-login").post(adminLogin);
 router.route("/login").post(login);
 router.route("/admin").post(admin);
