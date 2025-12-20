@@ -5,6 +5,7 @@ const validators = require("../middlewares/validator-middleware");
 // Screens
 const login = require("../screens/login");
 const adminRegister = require("../screens/admin-register");
+const adminLogin = require("../screens/admin-login");
 const register = require("../screens/register");
 const admin = require("../screens/admin");
 const media = require("../screens/media");
@@ -30,7 +31,8 @@ const upload = multer({ storage });
 const { resisterValidator } = require("../validators/user-validators");
 const { checkOutValidator } = require("../validators/checkout-validators");
 // Routes
-router.route("/api/auth/admin-register").post(authMiddleware, validators(resisterValidator), roleMiddleware(["admin"]), adminRegister);
+router.route("/api/auth/admin-register").post(authMiddleware, roleMiddleware(["admin"]), validators(resisterValidator), adminRegister);
+router.route("/api/auth/admin-login").post(adminLogin);
 router.route("/login").post(login);
 router.route("/admin").post(admin);
 router.route("/media").get(media);
