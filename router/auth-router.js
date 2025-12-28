@@ -49,7 +49,7 @@ router.route('/api/product/slug/:slug').get(getProductSlug);
 router.route("/api/all-products").get(authMiddleware, allProducts);
 router.route('/api/order-details/:id').get(authMiddleware, orderDetails);
 router.route('/api/single-product/:id').get(authMiddleware, getSingleProductData);
-router.route("/api/get-cloudinary-detials").get(authMiddleware, getCloudinaryDetials);
+router.route("/api/get-cloudinary-details").get(authMiddleware, getCloudinaryDetials);
 // Put  Routes
 router.route('/api/update-product/:id').put(editProduct);
 router.route("/api/update-order-status/:orderid/:status").put(authMiddleware, orderStatusUpdate);
