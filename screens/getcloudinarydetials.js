@@ -19,7 +19,7 @@ const getCloudinaryDetials = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "Failed to fetch Cloudinary details", error: error.message });
+        res.status(500).json({ success: false, message: `Failed to fetch Cloudinary details`, error: error.message });
     }
 }
 module.exports = getCloudinaryDetials;
