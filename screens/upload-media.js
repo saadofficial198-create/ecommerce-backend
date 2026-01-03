@@ -39,18 +39,13 @@ const uploadMedia = async (req, res, next) => {
       const fileBuffer = file.buffer;
       const originalName = Array.isArray(names) ? names[i] : names;
 
-      // Get file extension
-      const extension = originalName.includes(".")
-        ? originalName.substring(originalName.lastIndexOf("."))
-        : "";
-
-      const baseName = originalName.replace(extension, "");
+      const baseName = originalName.replace(/\.[^.]+$/, "");
 
       // Generate a unique name by checking DB
-      let uniqueName = baseName + extension;
+      let uniqueName = baseName;
       let counter = 1;
-      while (await Media.exists({ fileName: uniqueName })) {
-        uniqueName = `${baseName}-${counter}${extension}`;
+      while (await Media.exists({ name: uniqueName })) {
+        uniqueName = `${baseName}-${counter}`;
         counter++;
       }
 
