@@ -13,9 +13,13 @@ const mediaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  upload: {
+  createdAtFormatted: {
     type: Object,
     default: formatCustomDate,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
   type: {
     type: String,
@@ -24,4 +28,6 @@ const mediaSchema = new mongoose.Schema({
 }, { timestamps: false });
 
 // Export model
-module.exports = mongoose.model("Media", mediaSchema);
+const mediaModel = mongoose.model("Media", mediaSchema);
+
+module.exports = mediaModel;

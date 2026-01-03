@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const formatCustomDate = require("../utlis/orderController");
 const variantSchema = new mongoose.Schema({
   color: String,
   colorCode: String,
@@ -18,7 +18,8 @@ const productSchema = new mongoose.Schema({
   variants: [variantSchema],
   price: { type: Number },
   stock: { type: Number },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  createdAtFormatted: { type: Object, default: formatCustomDate, },
 }, { timestamps: true });
 
 const productModel = mongoose.model("Product", productSchema);

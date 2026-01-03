@@ -119,9 +119,13 @@ const checkOutSchema = new mongoose.Schema({
         default: defaultStatusHistory,
     },
 
-    createdAt: {
+    createdAtFormatted: {
         type: Object,
         default: formatCustomDate,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
     },
 });
 
