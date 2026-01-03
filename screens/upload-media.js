@@ -3,16 +3,25 @@ const cloudinary = require("../utlis/cloudinary");
 
 // Upload helper
 const uploadToCloudinary = async (fileBuffer, fileName) => {
-  const cleanedName = fileName.trim().toLowerCase().replace(/\s+/g, "-");
+  // remove extension completely
+  const nameWithoutExt = fileName.replace(/\.[^.]+$/, "");
+  const cleanedName = nameWithoutExt
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-");
   return new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(
-        { resource_type: "image", public_id: `media/${cleanedName}` },
+        {
+          resource_type: "image",
+          public_id: `media/${cleanedName}`,
+        },
         (err, result) => (err ? reject(err) : resolve(result.secure_url))
       )
       .end(fileBuffer);
   });
 };
+
 
 const uploadMedia = async (req, res, next) => {
   try {
