@@ -45,11 +45,11 @@ router.route("/api/add-new-product").post(authMiddleware, addNewProduct);
 router.route('/api/get-products-data/').post(authMiddleware, getsProductData);
 router.route("/api/upload-medias").post(authMiddleware, upload.array("media"), uploadMedia);
 // Get Routes
-router.route("/api/:resource").get(authMiddleware, getAll);
 router.route('/api/product/slug/:slug').get(getProductSlug);
 router.route('/api/order-details/:id').get(authMiddleware, orderDetails);
 router.route('/api/single-product/:id').get(authMiddleware, getSingleProductData);
 router.route("/api/get-cloudinary-details").get(authMiddleware, getCloudinaryDetials);
+router.route("/api/:resource").get(authMiddleware, getAll);
 // Put  Routes
 router.route('/api/update-product/:id').put(editProduct);
 router.route("/api/update-order-status/:orderid/:status").put(authMiddleware, orderStatusUpdate);
