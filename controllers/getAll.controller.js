@@ -12,6 +12,12 @@ module.exports = async (req, res) => {
     });
   }
 
+  const filterObj = { ...req.query };
+  const excludeFields = ["page", "sort", "limit"];
+  excludeFields.forEach((el) => delete filterObj[el]);
+
+  const totalCount = await Model.countDocuments(filterObj);
+
   const features = new APIFeatures(Model.find(), req.query)
     .filter()
     .sort()
@@ -21,6 +27,7 @@ module.exports = async (req, res) => {
 
   res.json({
     success: true,
+    totalCount,
     results: data.length,
     data,
   });
